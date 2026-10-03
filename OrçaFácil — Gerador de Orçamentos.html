@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OrçaFácil — Gerador de Orçamentos</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f4f9;--fg:#1a1f2e;--mut:#59627a;--card:#fff;--ln:#d5dbe8;--ac:#1d3fbb;--on:#fff;--rd:#e0292f;--yl:#ffd23f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f1420;--fg:#eef1f8;--mut:#98a2b8;--card:#182033;--ln:#2b3652;--ac:#7b95ff;--on:#0f1420}}
+:root[data-theme=dark]{--bg:#0f1420;--fg:#eef1f8;--mut:#98a2b8;--card:#182033;--ln:#2b3652;--ac:#7b95ff;--on:#0f1420}
+*,*:before,*:after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 'Bricolage Grotesque',system-ui,sans-serif}
+:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;display:flex;align-items:center;gap:20px;padding:12px 5%;background:var(--bg);border-bottom:1px solid var(--ln)}
+.nav b{font-size:21px;font-weight:800;margin-right:auto}
+.nav a.l{color:var(--fg);text-decoration:none;font-weight:600;font-size:14px}
+.btn{display:inline-block;border:0;border-radius:8px;padding:12px 20px;font-family:inherit;font-weight:800;font-size:15px;background:var(--ac);color:var(--on);cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.12)}
+.btn.o{background:transparent;color:var(--fg);border:2px solid var(--fg)}
+.btn.wa{background:#1fa855;color:#fff}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;padding:56px 5% 30px;max-width:1200px;margin:auto}
+.hero h1{font-size:clamp(36px,5.6vw,64px);line-height:1.02;margin:0 0 18px;font-weight:800;letter-spacing:-.02em}
+.hero p{color:var(--mut);font-size:18px;max-width:520px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.pills span{border:1.5px solid var(--ln);border-radius:99px;padding:6px 14px;font-weight:600;font-size:14px;background:var(--card)}
+.art{position:relative;height:410px}
+.sh{position:absolute;width:64%;height:80%;border-radius:3px;box-shadow:0 14px 30px #0003}
+.s1{background:#ffc2d1;left:8%;top:14%;transform:rotate(-10deg)}
+.s2{background:var(--yl);left:14%;top:9%;transform:rotate(-5deg)}
+.s3{background:#fff;color:#1a1f2e;left:21%;top:3%;transform:rotate(2deg);padding:18px;font-size:13px}
+.s3 .no{float:right;color:var(--rd);font-weight:800;font-size:24px}
+.s3 .hw{clear:both;display:flex;justify-content:space-between;border-bottom:1.5px solid #c9d1e6;padding:9px 0;color:#1d3fbb;font-family:"Segoe Print","Bradley Hand","Comic Sans MS",cursive;font-size:14px}
+.s3 .tr{position:absolute;left:0;right:0;bottom:54px;border-top:2px dashed #b9c2da}
+.stamp{position:absolute;right:0;bottom:14%;border:4px double var(--rd);color:var(--rd);font-weight:800;font-size:24px;padding:4px 14px;border-radius:6px;background:#fff9;transform:rotate(-12deg);animation:st .5s .5s both cubic-bezier(.2,1.6,.4,1)}
+@keyframes st{from{opacity:0;transform:scale(2.6) rotate(-30deg)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
+.sec{max-width:1200px;margin:auto;padding:50px 5%}
+.sec h2{font-size:clamp(28px,3.8vw,40px);line-height:1.1;margin:0 0 8px;font-weight:800}
+.sub{color:var(--mut);margin:0 0 26px;max-width:620px}
+.st{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));border:2px dashed var(--ln);background:var(--card)}
+.st>div{padding:24px}
+.st>div+div{border-left:2px dashed var(--ln)}
+.st b{display:block;font-size:48px;line-height:1;color:var(--rd)}
+.st h3{margin:8px 0 6px;font-size:19px}.st p{margin:0;color:var(--mut);font-size:15px}
+.bn{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:0 40px;margin-top:26px}
+.bn p{margin:0;padding:14px 0;border-bottom:1px solid var(--ln)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.chips button{font-family:inherit;font-weight:600;font-size:14px;padding:8px 14px;border-radius:99px;border:1.5px solid var(--ln);background:var(--card);color:var(--fg);cursor:pointer}
+.chips button:hover{border-color:var(--ac)}
+.gen{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:26px;align-items:start}
+.form{background:var(--card);border:1px solid var(--ln);border-radius:8px;padding:22px}
+.form h4{margin:22px 0 10px;font-size:17px;border-bottom:1px dashed var(--ln);padding-bottom:6px}
+.form h4:first-child{margin-top:0}
+.f{display:grid;grid-template-columns:1fr 1fr;gap:10px}.w{grid-column:1/-1}
+label{font-size:13px;font-weight:600;color:var(--mut)}
+input,select,textarea{width:100%;margin-top:3px;padding:10px 12px;border:1px solid var(--ln);border-radius:6px;background:var(--bg);color:var(--fg);font:inherit;font-size:15px}
+.row{display:grid;grid-template-columns:1fr 62px 96px 34px;gap:6px;margin-bottom:8px}
+.row input{margin:0}
+.x{border:0;border-radius:6px;background:#e0292f22;color:var(--rd);cursor:pointer;font-weight:800}
+@media(max-width:520px){.row{grid-template-columns:1fr 1fr 34px}.row .d{grid-column:1/-1}}
+.sw{display:flex;gap:10px}.sw button{width:32px;height:32px;border-radius:50%;border:3px solid var(--card);outline:2px solid var(--ln);cursor:pointer}
+.prev{position:sticky;top:calc(env(safe-area-inset-top,0px) + 70px)}
+.paper{--doc:#1d3fbb;background:#fff;color:#1f2937;border-radius:3px;border-top:10px solid var(--doc);padding:24px;font-size:13px;box-shadow:0 18px 44px #0003;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+.paper h5{margin:0;font-size:21px;color:var(--doc)}
+.paper small{display:block;color:#6b7280}
+.ph{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}.rt{text-align:right}
+.rt b{font-size:17px}.rt .no{display:block;color:#e0292f;font-weight:800;font-size:18px}
+.to{margin-top:16px;padding:10px 12px;background:#f3f4f6;border-left:4px solid var(--doc)}
+.tw{overflow-x:auto;margin:14px 0}
+.paper table{width:100%;border-collapse:collapse;min-width:340px}
+.paper th{background:var(--doc);color:#fff;text-align:left;padding:7px 8px;font-size:12px}
+.paper td{padding:7px 8px;border-bottom:1px solid #e5e7eb}
+.r{text-align:right!important}
+.tt{margin-left:auto;width:min(270px,100%)}
+.tt div{display:flex;justify-content:space-between;padding:3px 0}
+.tt .g{font-size:19px;font-weight:800;color:var(--doc);border-top:2px solid var(--doc);margin-top:4px;padding-top:6px}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:40px;text-align:center;font-size:11px;color:#6b7280}
+.sg div{border-top:1px solid #9ca3af;padding-top:4px}
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.tp{list-style:none;padding:0;margin:0;columns:2 320px;column-gap:44px}
+.tp li{break-inside:avoid;position:relative;padding:14px 0 14px 32px;border-bottom:1px solid var(--ln)}
+.tp li:before{content:"✔";position:absolute;left:0;color:var(--ac);font-weight:800}
+details{border-bottom:1px solid var(--ln);padding:14px 0}
+summary{font-weight:800;cursor:pointer;font-size:17px}
+details p{color:var(--mut);margin:8px 0 0;max-width:720px}
+footer{text-align:center;padding:34px 5%;color:var(--mut);font-size:14px;border-top:1px solid var(--ln)}
+@media(max-width:900px){.hero,.gen{grid-template-columns:1fr}.art{height:340px}.prev{position:static}.nav a.l{display:none}.st>div+div{border-left:0;border-top:2px dashed var(--ln)}}
+@media print{.nav,.hero,.sec:not(#gerador),footer,.form,.noprint{display:none!important}#gerador{padding:0}.gen{display:block}.prev{position:static}.paper{box-shadow:none}}
+</style>
+</head>
+<body>
+<header class="nav"><b>🧾 OrçaFácil</b><a class="l" href="#como">Como funciona</a><a class="l" href="#dicas">Dicas</a><a class="l" href="#faq">Dúvidas</a><a class="btn" href="#gerador">Criar orçamento</a></header>
+
+<section class="hero">
+<div>
+<h1>Monte um orçamento profissional em um minuto</h1>
+<p>Preencha os dados, adicione os itens e pronto: subtotal, desconto, impostos e parcelas são calculados na hora. Depois é só imprimir em PDF ou mandar o resumo no WhatsApp.</p>
+<p><a class="btn" href="#gerador">🚀 Criar meu orçamento</a> <a class="btn o" href="#como">Ver como funciona</a></p>
+<div class="pills"><span>🎨 Designers</span><span>🔧 Prestadores de serviço</span><span>🏗️ Obras e reformas</span><span>🍰 Confeiteiros</span><span>📸 Fotógrafos</span><span>💻 Freelancers</span></div>
+</div>
+<div class="art" aria-hidden="true">
+<div class="sh s1"></div><div class="sh s2"></div>
+<div class="sh s3"><b>🧾 Orçamento</b><span class="no">Nº 0042</span>
+<div class="hw"><span>Pintura da sala</span><span>480,00</span></div>
+<div class="hw"><span>Troca de torneiras</span><span>150,00</span></div>
+<div class="hw"><span>Material elétrico</span><span>220,00</span></div>
+<div class="hw"><b>Total</b><b>850,00</b></div><div class="tr"></div></div>
+<div class="stamp">APROVADO ✔</div>
+</div>
+</section>
+
+<section class="sec" id="como">
+<h2>Como funciona</h2>
+<p class="sub">Três passos, do campo em branco ao documento pronto para o cliente.</p>
+<div class="st">
+<div><b>1</b><h3>✍️ Preencha os dados</h3><p>Informe sua empresa, o cliente, o número do orçamento e a validade da proposta.</p></div>
+<div><b>2</b><h3>🧮 Adicione os itens</h3><p>Descrição, quantidade e valor. O sistema soma tudo e aplica desconto, impostos e frete.</p></div>
+<div><b>3</b><h3>📤 Envie ou imprima</h3><p>Salve em PDF, imprima ou compartilhe o resumo direto pelo WhatsApp.</p></div>
+</div>
+<div class="bn">
+<p>⚡ <b>Tudo ao vivo.</b> O documento muda enquanto você digita.</p>
+<p>🔒 <b>Dados no seu navegador.</b> Nada é enviado para servidores.</p>
+<p>🎨 <b>Cor personalizável.</b> Escolha o tom que combina com a sua marca.</p>
+<p>📱 <b>Funciona no celular.</b> Use no escritório ou na casa do cliente.</p>
+</div>
+</section>
+
+<section class="sec" id="gerador">
+<h2 class="noprint">Gerador de orçamentos</h2>
+<p class="sub noprint">Edite à esquerda e acompanhe o documento à direita. Comece por um modelo pronto ou limpe tudo.</p>
+<div class="chips noprint"><button onclick="load(P.design)">🎨 Design gráfico</button><button onclick="load(P.obra)">🏗️ Reforma</button><button onclick="load(P.festa)">🎉 Festas e buffet</button><button onclick="load({})">🧹 Limpar tudo</button></div>
+<div class="gen">
+<div class="form">
+<h4>🏢 Seu negócio</h4>
+<div class="f"><label class="w">Empresa ou profissional<input id="emp"></label><label>CNPJ ou CPF<input id="doc"></label><label>Telefone<input id="tel"></label><label class="w">E-mail<input id="mail"></label></div>
+<h4>👤 Cliente</h4>
+<div class="f"><label class="w">Nome do cliente<input id="cli"></label><label>CPF ou CNPJ<input id="cdoc"></label><label>Telefone<input id="ctel"></label></div>
+<h4>📄 Dados do orçamento</h4>
+<div class="f"><label>Número<input id="num" value="0001"></label><label>Data de emissão<input id="data" type="date"></label><label>Validade (dias)<input id="val" type="number" min="1" value="15"></label></div>
+<h4>🛒 Itens</h4>
+<div id="rows"></div><button class="btn o" onclick="add()">➕ Adicionar item</button>
+<h4>💵 Valores e pagamento</h4>
+<div class="f"><label>Desconto (%)<input id="desc" type="number" min="0" value="0"></label><label>Impostos (%)<input id="tax" type="number" min="0" value="0"></label><label>Frete ou outros (R$)<input id="frete" type="number" min="0" value="0"></label><label>Parcelas<input id="par" type="number" min="1" max="12" value="1"></label>
+<label class="w">Forma de pagamento<select id="pag"><option>PIX ou dinheiro (à vista)</option><option>Cartão de crédito</option><option>Boleto bancário</option><option>50% de entrada + 50% na entrega</option></select></label>
+<label class="w">Observações<textarea id="obs" rows="3"></textarea></label></div>
+<h4>🎨 Cor do documento</h4><div class="sw" id="sw"></div>
+</div>
+<div class="prev"><div class="paper" id="paper"></div>
+<div class="bar noprint"><button class="btn" onclick="print()">🖨️ Imprimir ou salvar em PDF</button><a class="btn wa" id="wa" target="_blank" rel="noopener">💬 Enviar no WhatsApp</a></div>
+<p class="sub noprint" style="margin-top:10px;font-size:14px">Se a janela de impressão não abrir, use Ctrl+P e escolha "Salvar como PDF".</p></div>
+</div>
+</section>
+
+<section class="sec" id="dicas">
+<h2>Checklist de um bom orçamento</h2>
+<p class="sub">Seis cuidados que evitam retrabalho e ajudam o cliente a dizer sim.</p>
+<ul class="tp">
+<li><b>Entenda o pedido.</b> Converse antes de calcular: escopo, prazo e expectativas.</li>
+<li><b>Detalhe cada item.</b> Descrições claras evitam discussões depois da entrega.</li>
+<li><b>Defina a validade.</b> Preços mudam; deixe a data limite visível.</li>
+<li><b>Conheça seu custo real.</b> Some material, tempo, deslocamento e impostos.</li>
+<li><b>Ofereça opções de pagamento.</b> À vista com desconto, parcelado ou com entrada.</li>
+<li><b>Acompanhe o envio.</b> Pergunte em até 48 horas se ficou alguma dúvida.</li>
+</ul>
+</section>
+
+<section class="sec" id="faq">
+<h2>Dúvidas frequentes</h2>
+<details><summary>Meus dados ficam salvos?</summary><p>Tudo é calculado no seu navegador e não vai para nenhum servidor. Ao fechar ou recarregar a página, as informações somem. Por isso, salve o PDF antes de sair.</p></details>
+<details><summary>Como salvo o orçamento em PDF?</summary><p>Clique em "Imprimir ou salvar em PDF" e, na janela que abrir, escolha "Salvar como PDF" como destino. Só o documento é impresso, sem o restante da página.</p></details>
+<details><summary>O orçamento tem validade jurídica?</summary><p>Ele é uma proposta comercial. Depois de aprovado pelo cliente, serve de base para contrato ou nota fiscal. Para questões legais ou fiscais, consulte um contador ou advogado.</p></details>
+<details><summary>Posso usar em qualquer área?</summary><p>Sim. Serviços, obras, eventos, design, tecnologia e comércio. Use os modelos prontos como ponto de partida e troque pelos seus itens.</p></details>
+</section>
+
+<footer>🧾 OrçaFácil — gerador de orçamentos online. Projeto para exposição, 2026.</footer>
+
+<script>
+const $=s=>document.querySelector(s),V=i=>$('#'+i).value,N=i=>+V(i)||0,
+brl=n=>n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'}),
+dt=s=>s?s.split('-').reverse().join('/'):'',
+esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]),
+L=(a,b)=>b?`<div><span>${a}</span><span>${brl(b)}</span></div>`:'';
+let items=[];
+const P={
+design:{emp:'Studio Lume Design',doc:'12.345.678/0001-90',tel:'(46) 99999-1234',mail:'oi@studiolume.com',cli:'Padaria Pão Dourado',desc:5,par:3,pag:'Cartão de crédito',obs:'Prazo de 10 dias úteis. Inclui 2 rodadas de ajustes.',items:[['Criação de logotipo e manual de marca',1,1800],['Cartão de visita (500 un.)',1,260],['Pacote de 12 posts para Instagram',1,540]]},
+obra:{emp:'Silva Reformas',doc:'987.654.321-00',tel:'(46) 98888-4321',mail:'silva@reformas.com',cli:'Maria Oliveira',tax:3,frete:150,pag:'50% de entrada + 50% na entrega',obs:'Materiais de acabamento por conta do contratante. Garantia de 90 dias.',items:[['Pintura interna (m²)',85,32],['Assentamento de porcelanato (m²)',24,120],['Ponto elétrico instalado',10,95],['Diária de ajudante',6,180]]},
+festa:{emp:'Sabor e Festa Buffet',doc:'45.678.901/0001-23',tel:'(46) 97777-5566',mail:'buffet@saborefesta.com',cli:'Família Andrade',desc:10,par:2,pag:'Boleto bancário',obs:'Valores para 60 convidados. Inclui montagem e equipe de 4 garçons.',items:[['Buffet completo (por pessoa)',60,89],['Bolo decorado de 3 andares',1,420],['Decoração temática',1,650],['Equipe de garçons',4,120]]}};
+function load(o){
+ o={emp:'',doc:'',tel:'',mail:'',cli:'',cdoc:'',ctel:'',desc:0,tax:0,frete:0,par:1,pag:'PIX ou dinheiro (à vista)',obs:'',items:[['',1,0]],...o};
+ for(const k in o)if(k!='items')$('#'+k).value=o[k];
+ items=o.items.map(([d,q,p])=>({d,q,p}));rows();draw()}
+function rows(){$('#rows').innerHTML=items.map((x,i)=>`<div class="row" data-i="${i}"><input class="d" data-k="d" placeholder="Descrição do item" value="${esc(x.d)}"><input data-k="q" type="number" min="0" placeholder="Qtd" value="${x.q}"><input data-k="p" type="number" min="0" step="0.01" placeholder="R$ unit." value="${x.p}"><button class="x" onclick="del(${i})" title="Remover item">✕</button></div>`).join('')}
+const add=()=>{items.push({d:'',q:1,p:0});rows();draw()},
+del=i=>{items.splice(i,1);if(!items.length)items.push({d:'',q:1,p:0});rows();draw()},
+col=c=>$('#paper').style.setProperty('--doc',c);
+function draw(){
+ const sub=items.reduce((s,x)=>s+x.q*x.p,0),d=sub*N('desc')/100,t=(sub-d)*N('tax')/100,fr=N('frete'),tot=sub-d+t+fr,n=Math.max(1,Math.round(N('par'))),dv=V('data'),
+ end=dv?new Date(new Date(dv+'T12:00').getTime()+N('val')*864e5).toLocaleDateString('pt-BR'):'',
+ pg=V('pag')+(n>1?`, em ${n}x de ${brl(tot/n)}`:'');
+ $('#paper').innerHTML=`<div class="ph"><div><h5>${esc(V('emp'))||'Sua empresa'}</h5><small>${esc(V('doc'))} ${esc(V('tel'))}</small><small>${esc(V('mail'))}</small></div><div class="rt"><b>Orçamento</b><span class="no">Nº ${esc(V('num'))}</span><small>Emitido em ${dt(dv)}</small><small>Válido até ${end}</small></div></div>
+<div class="to"><small>Cliente</small><b>${esc(V('cli'))||'Nome do cliente'}</b><small>${esc(V('cdoc'))} ${esc(V('ctel'))}</small></div>
+<div class="tw"><table><tr><th>Descrição</th><th class="r">Qtd</th><th class="r">Unitário</th><th class="r">Total</th></tr>${items.map(x=>`<tr><td>${esc(x.d)||'—'}</td><td class="r">${x.q}</td><td class="r">${brl(x.p)}</td><td class="r">${brl(x.q*x.p)}</td></tr>`).join('')}</table></div>
+<div class="tt">${L('Subtotal',sub)}${L('Desconto ('+N('desc')+'%)',-d)}${L('Impostos ('+N('tax')+'%)',t)}${L('Frete ou outros',fr)}<div class="g"><span>Total</span><span>${brl(tot)}</span></div></div>
+<p><b>Pagamento:</b> ${esc(pg)}</p>${V('obs')?`<p><b>Observações:</b> ${esc(V('obs'))}</p>`:''}
+<div class="sg"><div>Assinatura do cliente</div><div>Assinatura da empresa</div></div>`;
+ $('#wa').href='https://wa.me/?text='+encodeURIComponent(`*Orçamento ${V('num')}* — ${V('emp')}\nCliente: ${V('cli')}\n`+items.map(x=>`• ${x.d||'Item'} (${x.q}x ${brl(x.p)})`).join('\n')+`\n*Total: ${brl(tot)}*\nPagamento: ${pg}\nVálido até ${end}`)}
+$('#rows').addEventListener('input',e=>{const k=e.target.dataset.k;if(k)items[+e.target.closest('.row').dataset.i][k]=k=='d'?e.target.value:+e.target.value||0});
+$('.form').addEventListener('input',draw);
+$('#data').value=new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10);
+$('#sw').innerHTML=['#1d3fbb','#0e7c66','#e0292f','#c26a00','#1a1f2e'].map(c=>`<button style="background:${c}" title="Cor ${c}" onclick="col('${c}')"></button>`).join('');
+load(P.design);
+</script>
+</body>
+</html>
